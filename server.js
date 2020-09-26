@@ -25,10 +25,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+app.get("/api/timestamp", function (req, res) {
+  let date = new Date();
+  res.json({"unix": date.getTime(), "utc" : date.toUTCString() });
+});
+
 app.get("/api/timestamp/:date_string", function (req, res) {
   let date;
-  if (req.params.date_string === '') date = new Date();
-  else if (req.params.date_string instanceof Date) date = new Date(req.params.date_string);
+  if (req.params.date_string instanceof Date) date = new Date(req.params.date_string);
   else date = new Date(parseInt(req.params.date_string));
 
   if (date.toUTCString() == 'Invalid Date') res.json({"error" : "Invalid Date" });
