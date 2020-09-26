@@ -24,6 +24,9 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/hellow", function (req, res) {
+  res.json({greeting: 'hellow API'});
+});
 
 
 // listen for requests :)
