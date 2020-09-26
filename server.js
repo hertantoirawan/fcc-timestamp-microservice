@@ -24,18 +24,21 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
+// timestamp microservice api without date string
 app.get("/api/timestamp", function (req, res) {
   let date = new Date();
   res.json({"unix": date.getTime(), "utc" : date.toUTCString() });
 });
 
+// timestamp microservice api with date string
 app.get("/api/timestamp/:date_string", function (req, res) {
-  let date;
-  if (req.params.date_string instanceof Date) date = new Date(req.params.date_string);
-  else date = new Date(parseInt(req.params.date_string));
+  // try if date string is a valid date
+  let date = new Date(req.params.date_string); 
 
-  if (date.toUTCString() == 'Invalid Date') res.json({"error" : "Invalid Date" });
+  // try if date string is a unix timestamp
+  if (date == 'Invalid Date') date = new Date(parseInt(req.params.date_string)); 
+  
+  if (date == 'Invalid Date') res.json({"error" : "Invalid Date" });
   else res.json({"unix": date.getTime(), "utc" : date.toUTCString() });
 });
 
